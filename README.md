@@ -4,7 +4,8 @@
   
   This Arduino code was written for a ESP8266 WEMOS D1 mini. Its purpose is to read the total
   power from a Shelly 3EM and send it via UART to Trucki's RS485 interface pcb for 
-  SUN GTIL2-1/2000 MPPT inverter. J1-J5 have to be open on the RS485 interface pcb (UART, ID:1).
+  SUN GTIL2-1/2000 MPPT inverter (https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000). 
+  J1-J5 have to be open on the RS485 interface pcb (UART, ID:1).
   
   The total power is filterd (ZeroExportController) before it is send to the inverter. The goal
   of the ZeroExportController is to keep the Shelly total power at ~50W. The inverter power 
