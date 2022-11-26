@@ -1,4 +1,4 @@
- Trucki2Shelly/Tasmota/MQTT Gateway  (T2SG) V1.02
+ Trucki2Shelly/Tasmota/MQTT Gateway  (T2SG) V1.03
   -----------------------------------------------
   ![Overview T2SG](/assets/images/shelly_overview.PNG)
   
