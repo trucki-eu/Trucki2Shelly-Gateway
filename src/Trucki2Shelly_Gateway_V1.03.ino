@@ -1,5 +1,5 @@
 /*
- * Trucki2Shelly/Tasmota/MQTT Gateway V1.02
+ * Trucki2Shelly/Tasmota/MQTT Gateway V1.03
  * -----------------------------------------
  * This Arduino code was written for a ESP8266 WEMOS D1 mini. Its purpose is to read the total
  * power from a Shelly 3EM and send it via UART to Trucki's RS485 interface pcb for 
@@ -97,6 +97,7 @@
  * Generic ESP8266, Flash Size 1MB (FS:64KB, OTA:~470KB)
  * 
  * //------------------------------------------------------------------------------------------- 
+ * 1.03 26.11.2022 : Bugfix: IP address was set static to 192.168.1.133 . Now it's config dependend
  * 1.02 21.11.2022 : WifiManager: Variable JSON keys, http-get intervall for Tasmota grid power read
  *                   Bugfix: Save Configuration even if not connected to wifi after config portal
  *                   SPIFFS replaced by eeprom read/write
@@ -270,9 +271,9 @@ void writeCustomParameters(void){                       //save custom parameters
     json["json_keys"]       = json_keys;
     json["shelly_interval"] = shelly_interval;
     json["maxPower"]        = maxPower;
-    json["ip"]              = "192.168.1.133"; //WiFi.localIP().toString();
-    json["gateway"]         = "192.168.1.1";   //WiFi.gatewayIP().toString();
-    json["subnet"]          = "255.255.255.0"; //WiFi.subnetMask().toString(); 
+    json["ip"]              = WiFi.localIP().toString();
+    json["gateway"]         = WiFi.gatewayIP().toString();
+    json["subnet"]          = WiFi.subnetMask().toString(); 
     Serial.println("Writing to eeprom:");
     EEPROM.begin(EEPROM_SIZE);
     EepromStream eepromStream(0, EEPROM_SIZE);
