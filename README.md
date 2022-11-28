@@ -14,6 +14,24 @@
   As I do not own a Shelly 3EM (only a 1PM) I wasn't able to test this code in a productive 
   environment.
   
+  WEMOS Adapter
+  -------------
+  I sell ( RS485(a)trucki(point)eu ) a WEMOS Adapter for my pcb as well. With this adapter (WMEOS not included) 
+  you can mount a WEMOS D1 mini with external antenna into the SUN GTIL2 1/2000 inverter:
+  
+  <img src="/assets/images/WEMOS Adapter Set_small.jpg" width="200">
+
+  <img src="/assets/images/SUN1000 RS485 pcb WEMOS D1 mini Pro_small.jpg" width="200">
+  
+  <img src="/assets/images/SUN1000_ext.Antenne_small.jpg" width="200">  
+   
+  There are some WEMOS/ESP8266 modules with a high power consumption on startup. This might cause problems 
+  during the boot process of the ESP8266 processor. To prevent this you can mount a 220uF electrolyte 
+  capacitor to the VCC/GND pin of the RS485 board. Make sure that the polarity is right:
+  
+  <img src="/assets/images/220uF_25V.JPG" width="200">   
+  
+  
   Setup
   -----
   After the first start (~30s) you will find an open accesspoint named:"Trucki2Shelly Gateway".
