@@ -29,7 +29,9 @@
   during the boot process of the ESP8266 processor. To prevent this you can mount a 220uF electrolyte 
   capacitor to the VCC/GND pin of the RS485 board. Make sure that the polarity is right:
   
-  <img src="/assets/images/220uF_25V.JPG" width="200">   
+  <img src="/assets/images/220uF_25V.JPG" width="200"> 
+  
+  I'll integrate this capacitors to newer pcb versions (28.11.2022) . The production date is marked on the pcb. 
   
   
   Setup
