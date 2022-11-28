@@ -16,7 +16,7 @@
   
   WEMOS Adapter
   -------------
-  I sell ( RS485(a)trucki(point)eu ) a WEMOS Adapter for my pcb as well. With this adapter (WMEOS not included) 
+  I sell ( RS485(a)trucki(point)eu ) a WEMOS Adapter for my pcb as well. With this adapter (WEMOS not included) 
   you can mount a WEMOS D1 mini with external antenna into the SUN GTIL2 1/2000 inverter:
   
   <img src="/assets/images/WEMOS Adapter Set_small.jpg" width="200">
