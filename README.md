@@ -148,7 +148,7 @@
   
   <img src="/assets/images/ESPEasyFlasher.JPG" width="200">
   
-  The bin file is here: https://github.com/trucki-eu/Trucki2Shelly-Gateway/blob/main/bin/Trucki2Shelly_Gateway_V1.02.ino.bin
+  The bin file is here: https://github.com/trucki-eu/Trucki2Shelly-Gateway/blob/main/bin/
  
   Config Reset
   ------------
