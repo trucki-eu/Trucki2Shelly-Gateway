@@ -118,7 +118,7 @@
 #include <StreamUtils.h>          //Benoit Blanchon
 
 #define EEPROM_SIZE 1024
-#define VERSION "1.02 21.11.2022"
+#define VERSION "1.03 01.12.2022"
 
 DNSServer dnsServer;
 ESP8266WebServer server(80);
