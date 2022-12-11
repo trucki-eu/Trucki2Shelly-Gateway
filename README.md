@@ -142,8 +142,11 @@
   
   Flashing
   --------
-  I use "ESP.Easy.Flasher.exe" to flash the bin-file to the WEMOS module. Before starting you 
-  have to copy the bin-file into the /bin folder. After starting select USB Port and bin-file 
+  I use "ESP.Easy.Flasher.exe" to flash the bin-file to the WEMOS module. 
+  
+  https://github.com/Grovkillen/ESP_Easy_Flasher/releases
+  
+  Before starting you have to copy the bin-file into the /bin folder. After starting select USB Port and bin-file 
   and press flash. After a reset you can begin with the setup.
   
   <img src="/assets/images/ESPEasyFlasher.JPG" width="200">
