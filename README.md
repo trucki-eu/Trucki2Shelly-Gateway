@@ -165,9 +165,9 @@ A calibration of a Trucki RS485 pcb is only necessary if the difference between 
 and AC_Display is more than ~15%. Make sure that your DC Source (i.E. battery) has enough 
 power to power your inverter for at least 1min at maximum power. To start the calibration
 go to the settings-page (!) and enter the following address in your browser:
-http://<T2SG-IP-address>/calibration?step=1 
+http://T2SG-IP-address/calibration?step=1 
 If you want to reload the default calibration enter this address in your browser:
-http://<T2SG-IP-address>/calibration?step=99   
+http://T2SG-IP-address/calibration?step=99   
 
 HomeAssistant mqtt read/write
 -----------------------------
