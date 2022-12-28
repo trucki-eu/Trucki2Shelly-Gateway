@@ -215,6 +215,23 @@ WEMOS module.
   
 The serial debug interface will show: "CONFIG RESET" and after ~30s you can 
 connect to the accesspoint.
+
+The blue LED will be constant ON if the config reset was successful.
+
+Blue LED
+---------
+The blue LED on the WEMOS board flashes every ~1s if connected to your wifi. If the WEMOS module is not configured (Accesspoint "Trucki2Shelly Gateway" is active) the blue LED is constant ON.
+
+Peculiarities WEMOS D1 mini PRO
+-------------------------------
+I had some WEMOS D1 mini Pro modules crashing during boot or normal operation. I discoverd voltage drops on the internal 3.3V line of the WEMOS Pro modules:
+
+<img src="/assets/images/3_3V_voltage_drop.JPG" width="400">
+
+Adding a 10uF capacitor between 3.3V and GND helped:
+
+<img src="/assets/images/WEMOS PRO+10uF.JPG" width="400">
+
   
 Compiling
 ---------
