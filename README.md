@@ -122,10 +122,23 @@ json_keys: StatusSNS,SML,Power_curr
  
 Serial debug interface
 ----------------------
-If you open a Termianl monitor with 9600baud you will get debug information during the
-start. I.e. you can use Putty: Connection type: Serial,Serial line: COM9, Speed: 9600
+If you open a Termianl monitor with 9600baud, 8N1 you will get debug information during the
+start.
 
-<img src="/assets/images/wifi_debug_output.JPG" width="400">
+Connect your WEMOS module via USB to your Windows computer and open your Windows Device Manager 
+to find out the COM-Port number. You might need to install additional USB Drivers for the CP2104
+USB Bridge of the WEMOS module (https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
+
+<img src="/assets/images/DeviceManager.png" width="200">
+
+Download, install and start i.e. Putty from https://putty.org .
+Select "Serial" as connection type and correct the COM-Port number:
+
+<img src="/assets/images/Putty_Settings.JPG" width="400">
+
+Press "OPEN" and RESET your WEMOS module. You'll get the Debug output of your module:
+
+<img src="/assets/images/Putty_output.JPG" width="400">
   
 MQTT client publish (read only)
 -------------------------------
