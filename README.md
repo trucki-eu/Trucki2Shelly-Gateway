@@ -1,6 +1,6 @@
 Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.05
 -----------------------------------------------
-![Overview T2SG](/assets/images/shelly_overview.PNG)
+![Overview T2SG](./assets/images/shelly_overview.PNG)
   
 This Arduino code was written for a ESP8266 WEMOS D1 mini. Its purpose is to read the total
 power from a Shelly 3EM and send it via UART to Trucki's RS485 interface pcb for 
@@ -20,7 +20,7 @@ WEMOS Adapter
 I sell ( RS485(a)trucki(point)eu ) a WEMOS Adapter for my pcb as well. With this adapter (WEMOS not included) 
 you can mount a WEMOS D1 mini with external antenna into the SUN GTIL2 1/2000 inverter:
   
-<img src="/assets/images/WEMOS Adapter Set_small.jpg" width="200">
+<img src="./assets/images/WEMOS Adapter Set_small.jpg" width="200">
 
 <img src="/assets/images/SUN1000 RS485 pcb WEMOS D1 mini Pro_small.jpg" width="200">
   
