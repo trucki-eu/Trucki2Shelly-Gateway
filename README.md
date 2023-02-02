@@ -59,7 +59,10 @@ I had some WEMOS D1 mini Pro modules crashing during boot or normal operation. I
 
 Adding a 10uF capacitor between 3.3V and GND helped:
 
-<img src="./assets/images/WEMOS PRO+10uF.JPG" width="400">
+<img src="./assets/images/WEMOS_D1_mini_Pro_CAP_V2.jpg" width="400">
+
+There are versions of the WEMOS D1 mini Pro which have a diode between VCC_USB and +5V. If your WEMOS only works with USB Power you might want to bridge this diode. The other versions are using a fuse instead of the diode. 
+
 
 Setup
 -----
