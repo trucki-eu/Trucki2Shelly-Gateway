@@ -113,7 +113,7 @@ meter_url:
 |---------------|--------------------------------------------------------------|
 | Shelly 1PM    | http://ip-address/status                                     |
 | Shelly 3EM    | http://ip-address/status                                     |
-| ShellyPro 3EM | http://ip-addres/rpc/Shelly.GetStatus  (Shelly 0.13.0-beta3) |
+| ShellyPro 3EM | http://ip-address/rpc/Shelly.GetStatus (Shelly 0.13.0-beta3) |
 | Tasmota       | http://ip-address/cm?cmnd=status%2010                        |
 
 You can use "Search" to search for known engery meters in your network:
