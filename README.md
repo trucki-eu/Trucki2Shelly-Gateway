@@ -46,11 +46,11 @@ Now you can proceed directly with SETUP or first install the WEMOS board with th
 WEMOS Adapter
 -------------
 
-The lastest revision (V.31.01.2023) of the RS485 pcb has an onboard WEMOS socket. The WEMOS D1 mini pro can be mounted without an adapter on the RS485 pcb. Make sure to set switch J5 to UART. The WEMOS socket includes a 22uF capacitor on the +3.3V Pin to GND. There is no need for an extra capacitor on the WEMOS board anymore. If your WEMOS D1 mini pro board has a diode between +5V and VUSB you still should bridge it to connect VUSB direct to +5V.
+The lastest revision (V.31.01.2023) of the RS485 pcb has an onboard WEMOS socket. The WEMOS D1 mini pro can be mounted without an adapter on the RS485 pcb. Make sure to set switch J5 to UART. The WEMOS socket includes a 22uF capacitor on the +3.3V Pin to GND. There is no need for an extra capacitor on the WEMOS board anymore. If your WEMOS D1 mini pro board has a diode between +5V and VUSB you still should bridge it to connect VUSB direct to +5V. Make sure that the 0-ohm resistor next to the antenna connector has the right orientation to use the external antenna.
 
 <img src="./assets/images/RS485_WEMOS_Socket.JPG" width="200">
 
-For older RS485 pbc versions there is an adapter (WEMOS not included) to mount a WEMOS D1 mini pro with external antenna into your SUN GTIL2 1/2000 inverter:
+For older RS485 pcb versions there is an adapter (WEMOS not included) to mount a WEMOS D1 mini pro with external antenna into your SUN GTIL2 1/2000 inverter:
   
 <img src="./assets/images/WEMOS Adapter Set_small.jpg" width="200">
 
