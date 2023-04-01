@@ -1,10 +1,10 @@
-Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.07
+Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.08
 -----------------------------------------------
 ![Overview T2SG](./assets/images/shelly_overview.PNG)
   
 The Trucki2Shelly Gateway reads your house power consumption from an engery meter (i.e. Shelly 3EM) and limits the power output of your SUN-GTIL2-1/2000 solar inverter to your actual house consumption.
 
-Besides the energy meter you will need the following components: 
+Besides an energy meter you will need the following components: 
 - Trucki's RS485 interface pcb
 - WEMOS D1 mini Pro 
 - Adapter RS485 interface pcb - WEMOS module
@@ -27,7 +27,7 @@ Make sure J1-J5 (ID:1) are open and the switch (J5) is shifted to UART. If you h
 
 Flashing WEMOS D1 mini pro
 --------------------------
-Before installing the WEMOS D1 mini pro you should flash the latest *.bin file to it:
+Before installing the WEMOS D1 mini pro you should flash the latest *.bin(.gz) file to it:
 
 https://github.com/trucki-eu/Trucki2Shelly-Gateway/blob/main/bin/
 
@@ -89,34 +89,97 @@ The blue LED on the WEMOS board flashes every ~1s if connected to your wifi. If 
 
 Webinterface
 ------------
-Once your WEMOS module is connected to your wifi network you can open the configured IP address in your browser to access a very basic webserver with all values and a link to the settings page. The website will autoreload every 2s.
+Once your WEMOS module is connected to your wifi network you can open the configured IP address in your browser to access the T2SG webserver. Instead of the IP adress you can use the devicename followed by ".local" as well. I.e. http://T2SGxxxxxx.local .
 
-<img src="./assets/images/WebServer.JPG" width="300">
+<img src="./assets/images/WebInterface1.08.JPG" width="300">
 
 Settings
 --------
+By opening the menu points Device, Sun, Meter, ZEPC (Zero Export Controller) and MQTT you can configure the following settings:
 
-The settings page allows you to configure the following parameters:
+**Device settings:**
 
-<img src="./assets/images/Settings.JPG" width="300">
+<img src="./assets/images/DeviceSettings1.08.JPG" width="300">
 
-device name:
+
+***Wifi RSSI at boot:***
+
+
+Wifi link quality measured at boot in [dbm].
+
+***Version:***
+
+Trucki2Shelly Gateway Version
+
+Download boot log.txt
+download logfile saved during boot
+
+***WIPE/Factory reset:***
+
+Enter WIPE and press "Enter WIPE for factory reset" button to reset all settings to default and delete the wifi configuration. The module will restart in accesspoint mode.
+
+***Update firmware***
+
+press browse to select the new firmware file in *.bin or *.bin.gz format. As the format of the settings might change it could be necessary to do a hardware (D0+D5) factory reset (see below) after the update. 
+
+***devicename:***
 
 (default: T2SGxxxxxx - last digits of the wifi mac address) 
 
 To open the webinterface you can call http://devicename.local as well. Furthermore the devicename is the leading part of the mqtt topics.  
 
-max power[W]:
+**Inverter status & settings:**
 
-(default: 850) maximum inverter power. Use max. 850/1850W for SUN 1000 / 2000 . Please be aware that this is not a super save protected function. Your hardware installation (i.e. cables, etc.) should be strong enough to deliver the maximum inverter power. Unfortunately the power limit in the menu of the inverter doesn't function if the analog limiter input is used. 
+<img src="./assets/images/InverterSettings1.08.JPG" width="300">
 
-meter_url: 
+The SUN-page shows the status of the inverter and allows the following settings:
 
-(default: http://192.168.1.217/status  for Shelly 3EM) ; url where the T2SG can find a json structure with the current grid power. 
+***MODBUS Test:***
+
+The modbus test allows you to send modbus commands to the inverter. It has three options (AC, DAC, CAL):
+
+AC (reg=0): 
+
+range 0-1850 [W], can be used to set inverters output power by hand. ZEPC will be disabled. Use "ZEPC enable" button to re-enable.  
+
+DAC (reg=4):
+
+range 0-65535 = 0-3.3V, can be used to set the RT1 two pin analog output signal of the RS485 interface pcb. 
+
+CAL (reg=5):
+
+can be used to write the CAL Modbus register of the RS485 interface pcb. Send value=1 to start a calibration and value=99 to reload the default calibration.
+
+A calibration of a the RS485 interface pcb is only necessary if the difference between AC_Setpoint and AC_Display is more than ~15%. Make sure that your DC Source (i.e. battery) has enough power to power your inverter for at least 1min at maximum power. 
+
+With CURL you can send modbus commands from remote:
+```
+curl "http://IP-Adress/?modbus_reg=0&modbus_value=0" > NULL
+```  
+
+***max power[W]:***
+
+(default: 850) maximum inverter power. Make sure that your inverter current does not exceed 33A. The maximum power for 48V is: 48V *33A = 1584W .
+
+The temperature of your inverter should be below 60°C . If it is higher reduce the current into the inverter by i.e. increasing the battery voltage or by reducing the maximum power. 
+
+! Please be aware that maxPower is not a super save protected function ! 
+
+A software bug is always possible. Your hardware installation (i.e. cables, fuse, etc.) should be strong enough to deliver the maximum inverter power. The power limit in the menu of the inverter doesn't function if the analog limiter input is used. 
+
+
+**Meter settings:**
+
+<img src="./assets/images/MeterSettings1.08.JPG" width="300">
+
+***meter_url:*** 
+
+(default: http://192.168.1.217/status  for Shelly 3EM) ; url where the T2SG can find a json structure with the current grid power. The following table shows meter_urls for tested meters:
 
 | Meter             |      URL                                                     |
 |-------------------|--------------------------------------------------------------|
 | Shelly 1PM        | http://ip-address/status                                     |
+| Shelly EM         | http://ip-address/status                                     |
 | Shelly 3EM        | http://ip-address/status                                     |
 | ShellyPro 3EM     | http://ip-address/rpc/Shelly.GetStatus (Shelly 0.13.0-beta3) |
 | Tasmota           | http://ip-address/cm?cmnd=status%2010                        |
@@ -130,63 +193,72 @@ You can use "Search" to search for known engery meters in your network:
 
 If your meter was found select it and press "Apply" to copy IP and Json keys to the settings page. 
 
-json keys:
+***json keys:***
 
 (default: total_power  for Shelly 3EM) ; json key for grid power in the received json structure.
 | Meter             |      Jsons keys                               |
 |-------------------|-----------------------------------------------|
 | Shelly 1PM        | meters,0,power                                |
+| Shelly EM         | emeter,0,power                                |
 | Shelly 3EM        | total_power                                   |
 | ShellyPro 3EM     | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
 | Tasmota           | StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080  | Data,2                                        |
 | Iammeter WEM3080T | Datas,3,2                                     |
  
-meter intervall[ms]:
+***meter intervall[ms]:***
 
 (default: 500) grid power will be captured via http request from the engery meter_url every x ms.
+
+**ZEPC (Zero Export Controller) settings:**
+
+<img src="./assets/images/ZEPCSettings1.08.JPG" width="300">
+
+***ZEPC target min[W]:***
+
+(default 15) The ZeroExportController keeps the inverter output power stable if the total power of the meter is between target_min/max. If the total power is not in this range the ZEPC will increase/decrease the inverter power.
+
+***ZEPC target max[W]:***
+
+(default 30) see ZEPC target min
    
-ZEPC target min[W]:
+***ZEPC average:***
 
-(default 25) The ZeroExportController keeps the inverter output power stable if the total power of the engery meter is between target_min/max. If the total power is not in this range the ZEPC will increase/decrease the inverter power.
+(default 30) ZeroExportController calculates inverter power over average=30 meter values. If 
+the total power of the meter is lower that zepc target min a new value is calculated instandly. For a more aggressive controller setup choose: min:10, max:30, avg:10 .
 
-ZEPC target max[W]:
+**MQTT status & settings:**
 
-(default 75) see ZEPC target min
-   
-ZEPC average:
+<img src="./assets/images/MQTTSettings1.08.JPG" width="300">
 
-(default 60) ZeroExportController calculates inverter power over average=60 engery meter values. If 
-the total power of the engery meter is lower that zepc target min a new value is calculated instandly. For a more aggressive controller setup choose: min:10, max:30, avg:10 .
-   
-mqtt server: 
+
+***broker ip:*** 
 
 (default: 192.168.1.225) mqtt broker ip
  All mqtt settings are optional. Mqtt is used for i.e. data logging. You can use mqtt to send data to a homeserver like ioBroker, nodeRead or HomeAssistant.
 
-mqtt port: 
+broker port: 
 
 (default: 1883) mqtt broker port
 
-mqtt username: 
+***username: ***
 
 (default: mqtt_user)
 
-mqtt password: 
+***password: *** 
 
 (default: mqtt_pass)
 
-MQTT monitor:
--------------
-Click on "MQTT monitor" on the main page to get a status of the actual received and send mqtt topics:
+***MQTT monitor:***
 
-<img src="./assets/images/mqtt_monitor.JPG" width="300">
+Below the Save&Reboot button you will find the sent and received mqtt topics and values. 
+
 
 MQTT client publish (read only)
 -------------------------------
 !!! The mqtt topics (case sensitive) have changed from V1.05 -> V1.07 !!!
 
-The mqtt client publishes every 1.3s the following topics (V1.07): 
+The mqtt client publishes every 1.3s the following topics: 
 ```
 T2SG/ACSETPOINT
 T2SG/ACDISPLAY [W]
@@ -237,34 +309,11 @@ you will have to add a configuation like this to your configuration.yaml:
 <img src="./assets/images/T2SG_HomeAssistant_MQTT_Config.JPG " width="200">
 
 
-MODBUS Test
------------
-The modbus test at the bottom of the settings page has three options (AC, DAC, CAL):
-
-AC: 
-
-range 0-1850 [W], can be used to set inverters output power by hand. ZEPC will be disabled. Use "ZEPC enable" button to re-enable.  
-
-DAC:
-
-range 0-65535 = 0-3.3V, can be used to set the RT1 two pin analog output signal of the RS485 interface pcb. 
-
-CAL:
-
-can be used to write the CAL Modbus register of the RS485 interface pcb.  Send value=1 to start a calibration and value=99 to reload the default calibration.
-
-A calibration of a the RS485 interface pcb is only necessary if the difference between AC_Setpoint and AC_Display is more than ~15%. Make sure that your DC Source (i.e. battery) has enough power to power your inverter for at least 1min at maximum power. 
-
-Firmware Update
----------------
-
-starting with T2SG V1.07 you can update the T2SG firmware by uploading a new *.bin file to the settings page.
-
 Factory Reset:
 --------------
 If you want to reset the WIFI/IP configuration you can either goto the settings page and enter "WIPE" into the Factory reset field and press the "OK" button next to it.
 
-Or connect & hold D0 to D5 (i.e. with a screwdriver) and press the reset button on your WEMOS module for ~500ms. 
+Or connect & hold D0 to D5 (i.e. with a screwdriver) and press the reset button on your WEMOS module for ~500ms. D0+D5 must be hold for 2-3s after the reset.
   
 <img src="./assets/images/T2SG_Reset.JPG" width="200">
   
@@ -326,3 +375,30 @@ Compiling
 You don't need to compile this code. Just download the bin file from the bin folder of this project and flash it to your ESP8266 WEMOS module.
 If you want to compile it anyway the source code of V1.03 is here: https://github.com/trucki-eu/Trucki2Shelly-Gateway/archive/refs/tags/T2SG_V1.05.zip
 I used the standard Arduino IDE 1.8.13 with ESP SDK3.0.2 to compile this code. Generic ESP8266, Flash Size 1MB (FS:64KB, OTA:~470KB) .
+
+License and credits
+--------------------
+Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+The T2SG project is published under
+[Creative Commons Namensnennung-Nicht kommerziell-Share Alike 4.0 International-Lizenz][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/deed.de
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
+
+The project uses the following libraries:
+
+|Name               |URL                                                                                      |License|
+|-------------------|-----------------------------------------------------------------------------------------|-------|
+| ArduinoJson	 	| https://github.com/bblanchon/ArduinoJson/blob/6.x/LICENSE.txt 		                  |MIT    | 
+| StreamUtils	 	| https://github.com/bblanchon/ArduinoStreamUtils/blob/master/LICENSE.md               	  |MIT    | 
+| ESP8266 core 		| https://github.com/esp8266/Arduino#license-and-credits 		                          |LGPL   | 
+| LittleFS 		    | https://github.com/littlefs-project/littlefs/blob/master/LICENSE.md 		              |BSD 3  | 
+| WiFiManager	 	| https://github.com/tzapu/WiFiManager/blob/master/LICENSE 			                      |MIT    | 
+| ArduinoMqttClient | https://github.com/arduino-libraries/ArduinoMqttClient/blob/master/LICENSE.txt          |GNUV2.1|
+| uptime_formatter 	| https://github.com/YiannisBourkelis/Uptime-Library/blob/master/LICENSE                  |GNUV3  |
+
+I thank the authors for making my code life easyer by sharing there libaries.
