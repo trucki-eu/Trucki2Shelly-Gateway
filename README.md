@@ -6,11 +6,15 @@ The Trucki2Shelly Gateway reads your house power consumption from an engery mete
 
 Besides an energy meter and the SUN inverter you will need one of the following components: 
 - Trucki's RS485 interface pcb & Wifi module (i.e WEMOS D1 mini Pro )
+
 https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000  
+
 If you want to buy my interface you can write my an email: RS485(a)trucki(point)eu
 
 - Or T2SG Stick (only for Lumentree with feat. Trucki Firmware!)
+- 
 https://www.amazon.de/dp/B0BW4BDXGS
+
 https://www.amazon.de/dp/B0BVQW2M56 
 
 
