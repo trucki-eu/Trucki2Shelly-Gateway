@@ -1,29 +1,37 @@
-Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.08
+Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.09
 -----------------------------------------------
 ![Overview T2SG](./assets/images/shelly_overview.PNG)
   
-The Trucki2Shelly Gateway reads your house power consumption from an engery meter (i.e. Shelly 3EM) and limits the power output of your SUN-GTIL2-1/2000 solar inverter to your actual house consumption.
+The Trucki2Shelly Gateway reads your house power consumption from an engery meter (i.e. Shelly 3EM) and limits the power output of your SUN-GTIL2-600/1000/2000 solar inverter to your actual house consumption.
 
-Besides an energy meter you will need the following components: 
-- Trucki's RS485 interface pcb
-- WEMOS D1 mini Pro 
-- Adapter RS485 interface pcb - WEMOS module
+Besides an energy meter and the SUN inverter you will need one of the following components: 
+- Trucki's RS485 interface pcb & Wifi module (i.e WEMOS D1 mini Pro )
+https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000  
+If you want to buy my interface you can write my an email: RS485(a)trucki(point)eu
 
-My RS485 inteface pcb converts the analog limiter input of the SUN-GTIL2-1/2000 solar inverter to an RS485 or UART input. More documentation can be found here:
-https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000
+- Or T2SG Stick (only for Lumentree with feat. Trucki Firmware!)
+https://www.amazon.de/dp/B0BW4BDXGS
+https://www.amazon.de/dp/B0BVQW2M56 
 
-If you want to buy my interface and the wemos adapter you can write my an email: RS485(a)trucki(point)eu
 
-The T2SG filters the received total power of the engery meter (ZeroExportController) before it is send to the inverter. The goal of the ZeroExportController (ZEPC) is to keep the total power at ~50W (target min/max). The inverter power rises slowly over ~30s (average*interval) and drops fast (~1s). 
+The Trucki2ShellyGateway(T2SG) filters the received total power of the engery meter (ZeroExportController) before it is send to the inverter. The goal of the ZeroExportController (ZEPC) is to keep the total power at ~30W (target). The inverter power rises slowly over ~30s (average*interval) and drops fast (~1s). 
 
 Installation
 -------------
+
+RS485 pcb:
 
 Please follow the documentation of the RS485 interface to install it in your inverter:
 
 https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000#rs485-modbus-interface-for-sun-gtil2-10002000-mppt-inverter
 
 Make sure J1-J5 (ID:1) are open and the switch (J5) is shifted to UART. If you have a 2000W inverter close the 2000W Jumper on the RS485 interface.
+
+T2SG Stick:
+
+Use this german video for help: 
+
+https://www.youtube.com/watch?v=nXivmhSAXSI
 
 Flashing WEMOS D1 mini pro
 --------------------------
@@ -43,30 +51,16 @@ If flashing was successful the blue led on the WEMOS board turns on constant and
 
 Now you can proceed directly with SETUP or first install the WEMOS board with the WEMOS adapter into your inverter.
 
-WEMOS Adapter
--------------
+RS485 pcb Wifi module:
+----------------------
 
-The lastest revision (V.31.01.2023) of the RS485 pcb has an onboard WEMOS socket. The WEMOS D1 mini pro can be mounted without an adapter on the RS485 pcb. Make sure to set switch J5 to UART. The WEMOS socket includes a 22uF capacitor on the +3.3V Pin to GND. There is no need for an extra capacitor on the WEMOS board anymore. If your WEMOS D1 mini pro board has a diode between +5V and VUSB you still should bridge it to connect VUSB direct to +5V. Make sure that the 0-ohm resistor next to the antenna connector has the right orientation to use the external antenna.
+The lastest revision (V.31.01.2023) of the RS485 pcb has an onboard WEMOS socket. The WEMOS D1 mini pro can be mounted on the RS485 pcb. Make sure to set switch J5 to UART. The WEMOS socket includes a 22uF capacitor on the +3.3V Pin to GND. There is no need for an extra capacitor on the WEMOS board anymore. If your WEMOS D1 mini pro board has a diode between +5V and VUSB you still should bridge it to connect VUSB direct to +5V. Make sure that the 0-ohm resistor next to the antenna connector has the right orientation to use the external antenna.
 
 <img src="./assets/images/RS485_WEMOS_Socket.JPG" width="200">
 
-For older RS485 pcb versions there is an adapter (WEMOS not included) to mount a WEMOS D1 mini pro with external antenna into your SUN GTIL2 1/2000 inverter:
-  
-<img src="./assets/images/WEMOS Adapter Set_small.jpg" width="200">
-
-<img src="./assets/images/SUN1000 RS485 pcb WEMOS D1 mini Pro_small.jpg" width="200">
-  
-<img src="./assets/images/SUN1000_ext.Antenne_small.jpg" width="200">  
-   
-I had some WEMOS D1 mini Pro modules crashing during boot or normal operation. I discoverd voltage drops on the internal 3.3V line of the WEMOS Pro modules:
-
-<img src="./assets/images/3_3V_voltage_drop.JPG" width="400">
-
-Adding a 10uF capacitor between 3.3V and GND helped:
+There are versions of the WEMOS D1 mini Pro which have a diode between VCC_USB and +5V. If your WEMOS only works with USB Power you might want to bridge this diode. The other versions are using a fuse instead of the diode. 
 
 <img src="./assets/images/WEMOS_D1_mini_Pro_CAP_V2.jpg" width="400">
-
-There are versions of the WEMOS D1 mini Pro which have a diode between VCC_USB and +5V. If your WEMOS only works with USB Power you might want to bridge this diode. The other versions are using a fuse instead of the diode. 
 
 
 Setup
@@ -77,35 +71,38 @@ Connect to it and open http://192.168.4.1 in your browser:
 
 <img src="./assets/images/Wifimanager.png" width="400">
 
-Select Configure Wifi and set your wifi credentials, static IP, Subnet,Gateway address for this ESP8266 Wemos module. DHCP is not supported.
+Select Configure Wifi and set your wifi credentials. Blanks in the SSID are not allowed!
 
-Further settings will be done in the T2SG webinterface once the WEMOS module is successfully connected to your wifi network.
-  
-Once you have finished you can reset the module and check if it connects to your wifi by observing the blue led, ping the IP address or opening the IP address in your browser.
+The T2SG now supports DHCP. Just leave static IP, Gateway ans Subnet blank for DHCP or enter values if you want to use a static IP. 
 
-Blue LED
----------
-The blue LED on the WEMOS board flashes every ~1s if connected to your wifi. If the WEMOS module is not configured (Accesspoint "T2SGxxxxxx" is active) the blue LED is constant ON.
+Just above the SAVE button you find the mDNS address of your T2SG (http://T2SGxxxxxx.local). Once your T2SG is connected to your Wifi network you can enter this url into your browser to access the T2SG webinterface. So now it's time to write down the url of your T2SG.  
+
+Further settings will be done in the T2SG webinterface once it is successfully connected to your wifi network.
+
+
+Blue / orange  LED
+------------------
+The blue/orange LED flashes every ~1s if successfully connected to your wifi. If the T2SG is not configured (Accesspoint "T2SGxxxxxx" is active) the LED is constant ON.
 
 Webinterface
 ------------
 Once your WEMOS module is connected to your wifi network you can open the configured IP address in your browser to access the T2SG webserver. Instead of the IP adress you can use the devicename followed by ".local" as well. I.e. http://T2SGxxxxxx.local .
 
-<img src="./assets/images/WebInterface1.08.JPG" width="300">
+<img src="./assets/images/WebInterface.JPG" width="300">
 
 Settings
 --------
-By opening the menu points Device, Sun, Meter, ZEPC (Zero Export Controller) and MQTT you can configure the following settings:
+By opening the menu points Device, Sun1-3, Meter, ZEPC (Zero Export Controller) and MQTT you can configure the following settings:
 
 **Device settings:**
 
-<img src="./assets/images/DeviceSettings1.08.JPG" width="300">
+<img src="./assets/images/DeviceSettings.JPG" width="300">
 
 
 ***Wifi RSSI at boot:***
 
 
-Wifi link quality measured at boot in [dbm].
+Wifi link quality measured at boot in [0-100%].
 
 ***Version:***
 
@@ -120,7 +117,11 @@ Enter WIPE and press "Enter WIPE for factory reset" button to reset all settings
 
 ***Update firmware***
 
-press browse to select the new firmware file in *.bin or *.bin.gz format. As the format of the settings might change it could be necessary to do a hardware (D0+D5) factory reset (see below) after the update. 
+press browse to select the new firmware file in *.bin.gz format. As the format of the settings might change it will be necessary to do a factory reset (see below) after the update. If you get the Error: "Not enough space" you uploaded a .bin file. Try to compress the file with GZIP and upload it as *.bin.gz. 
+
+***Wifi IP, Gateway, Subnet:***
+
+If you want to use a static IP enter the IP, your Gateway and Subnet and press Save&Reboot. If you want to use DHCP leave all three fields blank.
 
 ***devicename:***
 
@@ -130,9 +131,13 @@ To open the webinterface you can call http://devicename.local as well. Furthermo
 
 **Inverter status & settings:**
 
-<img src="./assets/images/InverterSettings1.08.JPG" width="300">
+<img src="./assets/images/InverterSettings.JPG" width="300">
 
-The SUN-page shows the status of the inverter and allows the following settings:
+The SUN1 (Local) page shows the status of the inverter and allows the following settings:
+
+***Power Limit[W]:***
+
+The power limit is the maximum available power the inverter can do calulated by the T2SG. The calculation uses the maxPower value (see below), the temperature (reduce power if temperature > 60°C) and the battery voltage (powerlimit = vbat * 33A). It is calculated internaly and can not be changed.
 
 ***MODBUS Test:***
 
@@ -167,10 +172,47 @@ The temperature of your inverter should be below 60°C . If it is higher reduce 
 
 A software bug is always possible. Your hardware installation (i.e. cables, fuse, etc.) should be strong enough to deliver the maximum inverter power. The power limit in the menu of the inverter doesn't function if the analog limiter input is used. 
 
+With CURL & MQTT (see below) you can change the maxPower temporary from remote:
+```
+curl "http://192.168.1.213/?maxPower=850" > NULL
+```  
+
+***vbat cutoff[V]:***
+
+Sun1 AC Setpoint will be set to 0W if your battery voltage is below VbatCutoff. 
+
+With CURL you can change the vbatcutoff temporary from remote:
+```
+curl "http://192.168.1.213/?vbatCutoff=47.1" > NULL
+```  
+
+***vbat reboot[V]:***
+
+Battery restart voltage after a detected VBatcutoff 
+
+With CURL you can change the vbatcutoff temporary from remote:
+```
+curl "http://192.168.1.213/?vbatReboot=48.5" > NULL
+``` 
+**SUN2-3 (Remote):**
+
+You can add up to two other T2SG to your first T2SG just by adding the IP Adress of your 2nd and 3rd T2SG.
+
+The ZEPC will add the next SUN if the power limit of the previous SUN is used for 75%. It will be disabled again if its power drops below 50% of its power limit.  
+
+Do not enter a Meter url in the webinterface of the 2nd and 3rd SUN. The ZEPC of the 2nd, 3rd SUN will show LINKED if it is connected to the T2SG of the first SUN.
+
+The roundtrip shows the communication time between the local and the remote sun.
+
+
+<img src="./assets/images/Sun2_Remote.JPG" width="300">
+
+ 
 
 **Meter settings:**
 
-<img src="./assets/images/MeterSettings1.08.JPG" width="300">
+
+<img src="./assets/images/MeterSettings.JPG" width="300">
 
 ***meter_url:*** 
 
@@ -199,7 +241,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Meter             |      Jsons keys                               |
 |-------------------|-----------------------------------------------|
 | Shelly 1PM        | meters,0,power                                |
-| Shelly EM         | emeter,0,power                                |
+| Shelly EM         | emeters,0,power                                |
 | Shelly 3EM        | total_power                                   |
 | ShellyPro 3EM     | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
 | Tasmota           | StatusSNS, ... depends on your tasmota config |
@@ -212,24 +254,25 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 
 **ZEPC (Zero Export Controller) settings:**
 
-<img src="./assets/images/ZEPCSettings1.08.JPG" width="300">
+<img src="./assets/images/ZEPCSettings.JPG" width="300">
 
-***ZEPC target min[W]:***
+***ZEPC target [W]:***
 
-(default 15) The ZeroExportController keeps the inverter output power stable if the total power of the meter is between target_min/max. If the total power is not in this range the ZEPC will increase/decrease the inverter power.
+(default 30) The ZeroExportController keeps the inverter output power stable if the total power of the meter is between target_min/max. If the total power is not in this range the ZEPC will increase/decrease the inverter power.
 
-***ZEPC target max[W]:***
+With CURL & MQTT (see below) you can change the zepc target temporary from remote:
+```
+curl "http://192.168.1.213/?zepc_target=29" > NULL
+```  
 
-(default 30) see ZEPC target min
-   
 ***ZEPC average:***
 
 (default 30) ZeroExportController calculates inverter power over average=30 meter values. If 
-the total power of the meter is lower that zepc target min a new value is calculated instandly. For a more aggressive controller setup choose: min:10, max:30, avg:10 .
+the total power of the meter is lower than zepc target a new value is calculated instandly. For a more aggressive controller setup choose: target:30, avg:10 .
 
 **MQTT status & settings:**
 
-<img src="./assets/images/MQTTSettings1.08.JPG" width="300">
+<img src="./assets/images/MQTTSettings.JPG" width="300">
 
 
 ***broker ip:*** 
@@ -248,6 +291,12 @@ broker port:
 ***password: *** 
 
 (default: mqtt_pass)
+
+***HomeAssistant Discovery: *** 
+
+By enabling this checkbox the T2SG will send discovery information to HomeAssistant. If the MQTT Broker of your HomeAssistant is properly configured you will find the T2SG device as Entity in HomeAssistant. The *OVR numbers might not be discovery. At the moment I don't know why.
+
+(default: disabled)
 
 ***MQTT monitor:***
 
@@ -279,6 +328,8 @@ T2SG/ACSETPOINTOVR
 T2SG/CALSTEPOVR [1:start calib., 99:default LUT]
 T2SG/DACOVR [0-65535]
 T2SG/METEROVR
+T2SG/MAXPOWEROVR
+T2SG/TARGETOVR
 ```
 override meter value [W] (uint16). I.e. to simulate external grid power to ZeroExport Controller (meter_url musst be empty)
 
@@ -313,11 +364,16 @@ Factory Reset:
 --------------
 If you want to reset the WIFI/IP configuration you can either goto the settings page and enter "WIPE" into the Factory reset field and press the "OK" button next to it.
 
-Or connect & hold D0 to D5 (i.e. with a screwdriver) and press the reset button on your WEMOS module for ~500ms. D0+D5 must be hold for 2-3s after the reset.
+The routine for a hardware factory reset has changed wiht V1.09:
+
+For the T2SG Stick just press the reset button for about 5s through the small hole under the LED. The LED will blink fast if the reset was successful.
+
+For the Wifi Module connect D0 to D5 (i.e. with a screwdriver) for about 5s. The LED will blink fast if the reset was successful.
+
   
 <img src="./assets/images/T2SG_Reset.JPG" width="200">
-  
-The blue LED will be constant ON if the factory/config reset was successful and you will see the T2SGxxxxxx accesspoint again. 
+
+After the factory reset the LED will be constant ON and you will see the T2SGxxxxxx accesspoint again. 
 
 
 Tasmota instead Shelly
@@ -391,14 +447,16 @@ The T2SG project is published under
 
 The project uses the following libraries:
 
-|Name               |URL                                                                                      |License|
-|-------------------|-----------------------------------------------------------------------------------------|-------|
-| ArduinoJson	 	| https://github.com/bblanchon/ArduinoJson/blob/6.x/LICENSE.txt 		                  |MIT    | 
-| StreamUtils	 	| https://github.com/bblanchon/ArduinoStreamUtils/blob/master/LICENSE.md               	  |MIT    | 
-| ESP8266 core 		| https://github.com/esp8266/Arduino#license-and-credits 		                          |LGPL   | 
-| LittleFS 		    | https://github.com/littlefs-project/littlefs/blob/master/LICENSE.md 		              |BSD 3  | 
-| WiFiManager	 	| https://github.com/tzapu/WiFiManager/blob/master/LICENSE 			                      |MIT    | 
-| ArduinoMqttClient | https://github.com/arduino-libraries/ArduinoMqttClient/blob/master/LICENSE.txt          |GNUV2.1|
-| uptime_formatter 	| https://github.com/YiannisBourkelis/Uptime-Library/blob/master/LICENSE                  |GNUV3  |
+|Name               |URL                                                                                       |License|
+|-------------------|------------------------------------------------------------------------------------------|-------|
+| ArduinoJson	 	| https://github.com/bblanchon/ArduinoJson/blob/6.x/LICENSE.txt 		                   |MIT    | 
+| StreamUtils	 	| https://github.com/bblanchon/ArduinoStreamUtils/blob/master/LICENSE.md               	   |MIT    | 
+| ESP8266 core 		| https://github.com/esp8266/Arduino#license-and-credits 		                           |LGPL   | 
+| LittleFS 		    | https://github.com/littlefs-project/littlefs/blob/master/LICENSE.md 		               |BSD 3  | 
+| WiFiManager	 	| https://github.com/tzapu/WiFiManager/blob/master/LICENSE 			                       |MIT    | 
+| ArduinoMqttClient | https://github.com/arduino-libraries/ArduinoMqttClient/blob/master/LICENSE.txt           |GNUV2.1|
+| uptime_formatter 	| https://github.com/YiannisBourkelis/Uptime-Library/blob/master/LICENSE                   |GNUV3  |
+| ESPAsyncWebServer | https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/src/ESPAsyncWebServer.h#L7-L19|GNUV2.1|
+| ESPAsyncTCP       | https://github.com/me-no-dev/ESPAsyncTCP/blob/master/LICENSE.txt                         |GNUV3  |
 
 I thank the authors for making my code life easyer by sharing there libaries.
