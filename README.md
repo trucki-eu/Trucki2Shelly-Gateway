@@ -12,7 +12,7 @@ https://github.com/trucki-eu/RS485-Interface-for-Sun-GTIL2-1000
 If you want to buy my interface you can write my an email: RS485(a)trucki(point)eu
 
 - Or T2SG Stick (only for Lumentree with feat. Trucki Firmware!)
-- 
+ 
 https://www.amazon.de/dp/B0BW4BDXGS
 
 https://www.amazon.de/dp/B0BVQW2M56 
@@ -209,7 +209,7 @@ Do not enter a Meter url in the webinterface of the 2nd and 3rd SUN. The ZEPC of
 The roundtrip shows the communication time between the local and the remote sun.
 
 
-<img src="./assets/images/Sun2_Remote.JPG" width="300">
+<img src="./assets/images/SUN2_Remote.JPG" width="300">
 
  
 
@@ -284,19 +284,19 @@ the total power of the meter is lower than zepc target a new value is calculated
 (default: 192.168.1.225) mqtt broker ip
  All mqtt settings are optional. Mqtt is used for i.e. data logging. You can use mqtt to send data to a homeserver like ioBroker, nodeRead or HomeAssistant.
 
-broker port: 
+***broker port:*** 
 
 (default: 1883) mqtt broker port
 
-***username: ***
+***username:***
 
 (default: mqtt_user)
 
-***password: *** 
+***password:*** 
 
 (default: mqtt_pass)
 
-***HomeAssistant Discovery: *** 
+***HomeAssistant Discovery:*** 
 
 By enabling this checkbox the T2SG will send discovery information to HomeAssistant. If the MQTT Broker of your HomeAssistant is properly configured you will find the T2SG device as Entity in HomeAssistant. The *OVR numbers might not be discovery. At the moment I don't know why.
 
