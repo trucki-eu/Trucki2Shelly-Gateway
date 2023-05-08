@@ -354,7 +354,7 @@ If you just want to control the output power of the inverter use ACSETPOINTOVR.
 
 ! OVR stands for OVERWRITE ! Means if you OVERWRITE the maxPower value with MAXPOWEROVR=0 from your MQTT broker your T2SG will not work anymore. If you don't want to overwrite the maxpower from your MQTT broker disable the value in your broker. I.e.: 
 
-<img src="./assets/images/T2SG_HomeAssistant.jpg" width="200">
+<img src="./assets/images/iobroker_writeable.JPG" width="200">
 
 HomeAssistant mqtt read/write
 -----------------------------
