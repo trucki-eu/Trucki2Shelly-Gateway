@@ -1,4 +1,4 @@
-Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.09
+Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.10
 -----------------------------------------------
 ![Overview T2SG](./assets/images/shelly_overview.PNG)
   
