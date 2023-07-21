@@ -1,4 +1,4 @@
-Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.10
+Trucki2Shelly/Tasmota/MQTT Gateway (T2SG) V1.12
 -----------------------------------------------
 ![Overview T2SG](./assets/images/shelly_overview.PNG)
   
@@ -50,6 +50,15 @@ https://github.com/Grovkillen/ESP_Easy_Flasher/releases
 Before starting ESP Easy Flasher you have to copy the bin-file into the /bin folder. After starting select USB Port, bin-file and baudrate = 115200, press flash. After a reset you can begin with the SETUP.
   
 <img src="./assets/images/ESPEasyFlasher.JPG" width="200">
+
+As alternative flash programs you can use:
+https://github.com/nodemcu/nodemcu-flasher
+
+Or the Espressif ESPTool:
+https://github.com/espressif/esptool/releases
+```
+esptool.exe --chip esp8266 --port COM4 --baud 115200 --before default_reset --connect-attempts 0 --after hard_reset write_flash 0x0 Trucki2Shelly_Gateway_V1.12.esp8285.bin.gz
+```
 
 If flashing was successful the blue led on the WEMOS board turns on constant and you will find a wifi accesspoint named: T2SGxxxxxx . 
 
@@ -123,9 +132,19 @@ Enter WIPE and press "Enter WIPE for factory reset" button to reset all settings
 
 press browse to select the new firmware file in *.bin.gz format. As the format of the settings might change it will be necessary to do a factory reset (see below) after the update. If you get the Error: "Not enough space" you uploaded a .bin file. Try to compress the file with GZIP and upload it as *.bin.gz. 
 
-***Wifi IP, Gateway, Subnet:***
+***Wifi IP, Gateway, Subnet, DNS:***
 
-If you want to use a static IP enter the IP, your Gateway and Subnet and press Save&Reboot. If you want to use DHCP leave all three fields blank.
+If you want to use a static IP enter the IP, your Gateway, Subnet, DNS and press Save&Reboot. Use Gateway IP for DNS if you don't know what DNS is for. If you want to use DHCP leave all four fields blank.
+
+***NTP, Timezone, NTP Time:***
+
+(Default NTP Server) pool.ntp.org . 
+
+(Default posix timezone for Germany) CET-1CEST,M3.5.0/02,M10.5.0/03
+
+You can find other timezones at: https://github.com/nayarsystems/posix_tz_db/blob/master/zones.json
+
+The NTP Time is used for the night settings in the inverter menu.
 
 ***devicename:***
 
@@ -198,6 +217,14 @@ With CURL you can change the vbatcutoff temporary from remote:
 ```
 curl "http://192.168.1.213/?vbatReboot=48.5" > NULL
 ``` 
+***night starts/ends at:***
+
+Start/Stop time HH:MM for night mode
+
+***maxPower at night:***
+
+Maximum inverter power in night mode
+
 **SUN2-3 (Remote):**
 
 You can add up to two other T2SG to your first T2SG just by adding the IP Adress of your 2nd and 3rd T2SG.
@@ -231,6 +258,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Tasmota           | http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080  | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T | http://ip-address/monitorjson                                |
+| Powerfox Poweropti | http://ip-address/rpc                                        |
 
 
 You can use "Search" to search for known engery meters in your network:
@@ -251,10 +279,15 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Tasmota           | StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080  | Data,2                                        |
 | Iammeter WEM3080T | Datas,3,2                                     |
+| Powerfox Poweropti | result                                     |
  
 ***meter intervall[ms]:***
 
 (default: 500) grid power will be captured via http request from the engery meter_url every x ms.
+
+***meter readout invert:***
+
+(default: OFF) OFF means: positiv meter value = house consumption. Negativ meter value means power export to the grid. ON: inverts this logic.
 
 **ZEPC (Zero Export Controller) settings:**
 
@@ -273,6 +306,10 @@ curl "http://192.168.1.213/?zepc_target=29" > NULL
 
 (default 30) ZeroExportController calculates inverter power over average=30 meter values. If 
 the total power of the meter is lower than zepc target a new value is calculated instandly. For a more aggressive controller setup choose: target:30, avg:10 .
+
+***use display feedback:***
+
+(default: OFF) ZeroExportController needs to know the current power of each inverter. OFF: The setpoints of the inverters are used for the ZEPC. ON: the display value of each inverter is used. As the display has ~1s delay the ZEPC is less accurate. Use this option if you are using solar panels on the DC input instead of a battery.
 
 **MQTT status & settings:**
 
@@ -419,7 +456,11 @@ start.
 
 Connect your WEMOS module via USB to your Windows computer and open your Windows Device Manager 
 to find out the COM-Port number. You might need to install additional USB Drivers for the CP2104
-USB Bridge of the WEMOS module (https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
+USB Bridge of the WEMOS module https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads
+
+For TruMos Wifi modules you will need the CH340 USB Driver which you can download as zip file here. Just click on the cloud icon at the middle of the page:
+https://www.wch.cn/download/CH341SER_ZIP.html
+
 
 <img src="./assets/images/DeviceManager.png" width="200">
 
