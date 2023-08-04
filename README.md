@@ -258,7 +258,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Tasmota           | http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080  | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T | http://ip-address/monitorjson                                |
-| Powerfox Poweropti | http://ip-address/rpc                                        |
+| Powerfox Poweropti | http://ip-address/rpc      (intervall max. 500ms)           |
 
 
 You can use "Search" to search for known engery meters in your network:
@@ -279,7 +279,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Tasmota           | StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080  | Data,2                                        |
 | Iammeter WEM3080T | Datas,3,2                                     |
-| Powerfox Poweropti | result                                     |
+| Powerfox Poweropti | result  (intervall max. 500ms)               |
  
 ***meter intervall[ms]:***
 
