@@ -258,8 +258,8 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Tasmota           | http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080  | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T | http://ip-address/monitorjson                                |
-| Powerfox Poweropti | http://ip-address/rpc      (intervall max. 500ms)           |
-
+| Powerfox Poweropti | http://ip-address/rpc  (intervall max. 500ms) (!see note!)  |
+Note: Powerfox can not used with T2SG anymore. With version 2.01.27 Powerfox closed the local readout.  
 
 You can use "Search" to search for known engery meters in your network:
 
@@ -273,14 +273,15 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Meter             |      Jsons keys                               |
 |-------------------|-----------------------------------------------|
 | Shelly 1PM        | meters,0,power                                |
-| Shelly EM         | emeters,0,power                                |
+| Shelly EM         | emeters,0,power                               |
 | Shelly 3EM        | total_power                                   |
 | ShellyPro 3EM     | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
 | Tasmota           | StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080  | Data,2                                        |
 | Iammeter WEM3080T | Datas,3,2                                     |
-| Powerfox Poweropti | result  (intervall max. 500ms)               |
- 
+| Powerfox Poweropti | result  (intervall max. 500ms) (!see note!)  |
+Note: Powerfox can not used with T2SG anymore. With version 2.01.27 Powerfox closed the local readout.
+
 ***meter intervall[ms]:***
 
 (default: 500) grid power will be captured via http request from the engery meter_url every x ms.
