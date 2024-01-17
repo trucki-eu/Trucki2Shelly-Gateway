@@ -249,16 +249,16 @@ The roundtrip shows the communication time between the local and the remote sun.
 
 (default: http://192.168.1.217/status  for Shelly 3EM) ; url where the T2SG can find a json structure with the current grid power. The following table shows meter_urls for tested meters:
 
-| Meter             |      URL                                                     |
-|-------------------|--------------------------------------------------------------|
-| Shelly 1PM        | http://ip-address/status                                     |
-| Shelly EM         | http://ip-address/status                                     |
-| Shelly 3EM        | http://ip-address/status                                     |
-| ShellyPro 3EM     | http://ip-address/rpc/Shelly.GetStatus (Shelly 0.13.0-beta3) |
-| Tasmota           | http://ip-address/cm?cmnd=status%2010                        |
-| Iammeter WEM3080  | http://ip-address/monitorjson                                |
-| Iammeter WEM3080T | http://ip-address/monitorjson                                |
-| Fronius Symo      | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?eScope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
+| Meter                 |      URL                                                     |
+|-----------------------|--------------------------------------------------------------|
+| Shelly 1PM            | http://ip-address/status                                     |
+| Shelly EM             | http://ip-address/status                                     |
+| Shelly 3EM            | http://ip-address/status                                     |
+| ShellyPro 3EM         | http://ip-address/rpc/Shelly.GetStatus (Shelly 0.13.0-beta3) |
+| Tasmota (i.e.Bitshake)| http://ip-address/cm?cmnd=status%2010                        |
+| Iammeter WEM3080      | http://ip-address/monitorjson                                |
+| Iammeter WEM3080T     | http://ip-address/monitorjson                                |
+| Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?eScope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
 
 You can use "Search" to search for known engery meters in your network:
 
@@ -269,16 +269,16 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 ***json keys:***
 
 (default: total_power  for Shelly 3EM) ; json key for grid power in the received json structure.
-| Meter             |      Jsons keys                               |
-|-------------------|-----------------------------------------------|
-| Shelly 1PM        | meters,0,power                                |
-| Shelly EM         | emeters,0,power                               |
-| Shelly 3EM        | total_power                                   |
-| ShellyPro 3EM     | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
-| Tasmota           | StatusSNS, ... depends on your tasmota config |
-| Iammeter WEM3080  | Data,2                                        |
-| Iammeter WEM3080T | Datas,3,2                                     |
-| Fronius Symo      | Body,Data,PowerReal_P_Sum                     |
+| Meter                 |      Jsons keys                               |
+|-----------------------|-----------------------------------------------|
+| Shelly 1PM            | meters,0,power                                |
+| Shelly EM             | emeters,0,power                               |
+| Shelly 3EM            | total_power                                   |
+| ShellyPro 3EM         | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
+| Tasmota (i.e.Bitshake)| StatusSNS, ... depends on your tasmota config |
+| Iammeter WEM3080      | Data,2                                        |
+| Iammeter WEM3080T     | Datas,3,2                                     |
+| Fronius Symo          | Body,Data,PowerReal_P_Sum                     |
 
 ***meter intervall[ms]:***
 
@@ -447,6 +447,8 @@ tper=20
 Your second json_key is SML and your third json_key is Power_curr .
 So, on the Trucki2Shelly Configuration page you have to enter for the
 json_keys: StatusSNS,SML,Power_curr    
+
+A youtube video from bitshake can be found here: https://youtu.be/9rGOnAxrqEI
  
 Serial debug interface
 ----------------------
