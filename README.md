@@ -259,6 +259,8 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Iammeter WEM3080      | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T     | http://ip-address/monitorjson                                |
 | Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?eScope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
+| Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  http://IP-ADRESSE/solar_api/v1/GetPowerFlowRealtimeData.fcgi |
+
 
 You can use "Search" to search for known engery meters in your network:
 
@@ -279,6 +281,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Iammeter WEM3080      | Data,2                                        |
 | Iammeter WEM3080T     | Datas,3,2                                     |
 | Fronius Symo          | Body,Data,PowerReal_P_Sum                     |
+| Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  Body,Data,Site,P_Grid |
 
 ***meter intervall[ms]:***
 
