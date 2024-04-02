@@ -105,7 +105,7 @@ Once your WEMOS module is connected to your wifi network you can open the config
 
 Settings
 --------
-By opening the menu points Device, Sun1-3, Meter, ZEPC (Zero Export Controller) and MQTT you can configure the following settings:
+By opening the menu points Device, Sun1-3, , ZEPC (Zero Export Controller) and MQTT you can configure the following settings:
 
 **Device settings:**
 
@@ -231,7 +231,7 @@ You can add up to two other T2SG to your first T2SG just by adding the IP Adress
 
 The ZEPC will add the next SUN if the power limit of the previous SUN is used for 75%. It will be disabled again if its power drops below 50% of its power limit.  
 
-Do not enter a Meter url in the webinterface of the 2nd and 3rd SUN. The ZEPC of the 2nd, 3rd SUN will show LINKED if it is connected to the T2SG of the first SUN.
+Do not enter a  url in the webinterface of the 2nd and 3rd SUN. The ZEPC of the 2nd, 3rd SUN will show LINKED if it is connected to the T2SG of the first SUN.
 
 The roundtrip shows the communication time between the local and the remote sun.
 
@@ -240,10 +240,10 @@ The roundtrip shows the communication time between the local and the remote sun.
 
  
 
-**Meter settings:**
+** settings:**
 
 
-<img src="./assets/images/MeterSettings.JPG" width="300">
+<img src="./assets/images/Settings.JPG" width="300">
 
 ***meter_url:*** 
 
@@ -255,6 +255,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Shelly EM             | http://ip-address/status                                     |
 | Shelly 3EM            | http://ip-address/status                                     |
 | ShellyPro 3EM         | http://ip-address/rpc/Shelly.GetStatus (Shelly 0.13.0-beta3) |
+| ShellyPro EM 50A      | http://ip-address/rpc/Shelly.GetStatus                       |
 | Tasmota (i.e.Bitshake)| http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080      | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T     | http://ip-address/monitorjson                                |
@@ -277,6 +278,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Shelly EM             | emeters,0,power                               |
 | Shelly 3EM            | total_power                                   |
 | ShellyPro 3EM         | em:0,total_act_power   (Shelly 0.13.0-beta3)  |
+| ShellyPro EM 50A      | em1:0,act_power                               |
 | Tasmota (i.e.Bitshake)| StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080      | Data,2                                        |
 | Iammeter WEM3080T     | Datas,3,2                                     |
