@@ -259,7 +259,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Tasmota (i.e.Bitshake)| http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080      | http://ip-address/monitorjson                                |
 | Iammeter WEM3080T     | http://ip-address/monitorjson                                |
-| Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?eScope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
+| Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?Scope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
 | Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  http://IP-ADRESSE/solar_api/v1/GetPowerFlowRealtimeData.fcgi |
 
 
