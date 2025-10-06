@@ -254,7 +254,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Shelly 1PM            | http://ip-address/status                                     |
 | Shelly EM             | http://ip-address/status                                     |
 | Shelly 3EM            | http://ip-address/status                                     |
-| ShellyPro 3EM,CT63    | http://ip-address/rpc/Shelly.GetStatus                       |
+| ShellyPro 3EM,CT63    | http://ip-address/rpc/EM.GetStatus?id=0                      |
 | ShellyPro EM 50A      | http://ip-address/rpc/Shelly.GetStatus                       |
 | Tasmota (i.e.Bitshake)| http://ip-address/cm?cmnd=status%2010                        |
 | Iammeter WEM3080      | http://ip-address/monitorjson                                |
@@ -278,7 +278,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Shelly 1PM            | meters,0,power                                |
 | Shelly EM             | emeters,0,power                               |
 | Shelly 3EM            | total_power                                   |
-| ShellyPro 3EM,CT63    | em:0,total_act_power                          |
+| ShellyPro 3EM,CT63    | total_act_power                               |
 | ShellyPro EM 50A      | em1:0,act_power                               |
 | Tasmota (i.e.Bitshake)| StatusSNS, ... depends on your tasmota config |
 | Iammeter WEM3080      | Data,2                                        |
