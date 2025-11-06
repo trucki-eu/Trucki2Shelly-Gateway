@@ -262,7 +262,7 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?Scope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
 | Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  http://IP-ADRESSE/solar_api/v1/GetPowerFlowRealtimeData.fcgi |
 | SHRDZM Smartm.        | http://ip-address/getLastData?user=xxx&password=xxx          |
-| EcoTracker            | http://ip-address//v1/json                                   |
+| EcoTracker            | http://ip-address/v1/json                                    |
 
 
 
