@@ -262,6 +262,8 @@ The roundtrip shows the communication time between the local and the remote sun.
 | Fronius Symo          | http://ip-address/solar_api/v1/GetMeterRealtimeData.cgi?Scope=Device&DeviceId=0&DataCollection=MeterRealtimeData  | 
 | Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  http://IP-ADRESSE/solar_api/v1/GetPowerFlowRealtimeData.fcgi |
 | SHRDZM Smartm.        | http://ip-address/getLastData?user=xxx&password=xxx          |
+| EcoTracker            | http://ip-address//v1/json                                   |
+
 
 
 You can use "Search" to search for known engery meters in your network:
@@ -286,6 +288,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | Fronius Symo          | Body,Data,PowerReal_P_Sum                     |
 | Fronius Symo, Datamgr2.0, Smartmeter 63A-3 |  Body,Data,Site,P_Grid |
 | SHRDZM Smartm.        | 16.7.0                                        |
+| EcoTracker            | power                                         |
 
 ***meter intervall[ms]:***
 
