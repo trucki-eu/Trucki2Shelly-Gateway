@@ -264,6 +264,8 @@ The roundtrip shows the communication time between the local and the remote sun.
 | SHRDZM Smartm.        | http://ip-address/getLastData?user=xxx&password=xxx          |
 | EcoTracker            | http://ip-address/v1/json                                    |
 | HomeWizard P1         | http://ip-address/api/v1/data                                |
+| Janitza UMG 604 Pro   | http://ip-address/json.do?_P_SUM3                            |
+
 
 
 
@@ -291,6 +293,7 @@ If your meter was found select it and press "Apply" to copy IP and Json keys to 
 | SHRDZM Smartm.        | 16.7.0                                        |
 | EcoTracker            | power                                         |
 | HomeWizard P1         | active_power_w                                |
+| Janitza UMG 604 Pro   | _P_SUM3,0                                     |
 
 ***meter intervall[ms]:***
 
